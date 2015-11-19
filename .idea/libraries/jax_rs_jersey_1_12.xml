@@ -1,0 +1,36 @@
+<component name="libraryTable">
+  <library name="jax-rs-jersey-1.12" type="JAX-RS">
+    <properties version="jersey-1.12" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Server/lib/comresrcgen-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/activation-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/asm-3.3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/jackson-jaxrs-1.9.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/jackson-xc-1.9.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/jackson-core-asl-1.9.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/FastInfoset-1.2.12.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/jaxb-api-2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/jackson-mapper-asl-1.9.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/grizzly-servlet-webserver-1.9.45.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/jdom-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/jersey-client-1.12.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/jaxb-impl-2.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/jersey-grizzly-1.12.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/jersey-multipart-1.12.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/jettison-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/localizer-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/jersey-bundle-1.12.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/jersey-core-1.12.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/mimepull-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/persistence-api-1.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/mail-1.4.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/stax-api-1.0-2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/wadl-cmdline-1.1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/rome-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/wadl-core-1.1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/lib/jaxb-xjc-2.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
