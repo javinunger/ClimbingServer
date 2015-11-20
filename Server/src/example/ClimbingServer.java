@@ -3,10 +3,7 @@ package example;
 import com.sun.jersey.api.container.httpserver.HttpServerFactory;
 import com.sun.net.httpserver.HttpServer;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,23 +13,22 @@ import java.sql.Statement;
 /**
  * Created by Chris on 11/19/2015.
  */
-
-
 @Path("/climbingserver")
 public class ClimbingServer {
 
     private static String DB_URI = "jdbc:postgresql://localhost:5433/ClimbingLog";
     private static String DB_LOGINID = "postgres";
-    private static String DB_PASSWORD = "LegendOfZelda567890";
+    private static String DB_PASSWORD = "LegendOfZelda567890";   //NEEDS TO BE CHANGED!
 
     @GET
     // The Java method will produce content identified by the MIME Media type "text/plain"
     @Produces("text/plain")
-    public String getClichedMessage() {
+    public String getMessage() {
         // Return some cliched textual content
-        return "Hey, World!";
+        return "Welcome to On Belay's Server!";
     }
 
+    //Gets all of the current Climbs
     @GET
     @Path("/climbs/")
     @Produces("text/plain")
@@ -60,6 +56,7 @@ public class ClimbingServer {
         return result;
     }
 
+    //Gets all of the current Climbers
     @GET
     @Path("/climbers/")
     @Produces("text/plain")
@@ -87,6 +84,7 @@ public class ClimbingServer {
         return result;
     }
 
+    //Gets a specific Climber
     @GET
     @Path("/climber/{id}")
     @Produces("text/plain")
@@ -111,6 +109,30 @@ public class ClimbingServer {
         return result;
     }
 
+    //Deletes a Climber
+    @DELETE
+    @Path("/climber/{id}")
+    @Produces("text/plain")
+    public String deleteClimber(@PathParam("id") String id) {
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection(DB_URI, DB_LOGINID, DB_PASSWORD);
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("DELETE FROM Player WHERE id= '" + id + "'");
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        return "Player " + id + " deleted...";
+    }
+    
+    //STILL NEED:
+    //+ POST methods - A way to add new Climbs and Climbers
+    //+ DELETE method - For a Climb
+    //+ PUT method - A way to update Climbs and Climbers
+
+    //Main method
     public static void main(String[] args) throws IOException {
         HttpServer server = HttpServerFactory.create("http://localhost:9998/");
         server.start();
@@ -123,4 +145,6 @@ public class ClimbingServer {
         server.stop(0);
         System.out.println("Server stopped");
     }
+
+
 }
