@@ -16,9 +16,9 @@ import java.sql.Statement;
 @Path("/climbingserver")
 public class ClimbingServer {
 
-    private static String DB_URI = "jdbc:postgresql://localhost:5433/ClimbingLog";
+    private static String DB_URI = "jdbc:postgresql://localhost:5432/ClimbingLog";
     private static String DB_LOGINID = "postgres";
-    private static String DB_PASSWORD = "LegendOfZelda567890";   //NEEDS TO BE CHANGED!
+    private static String DB_PASSWORD = "postgres";   //NEEDS TO BE CHANGED!
 
     @GET
     // The Java method will produce content identified by the MIME Media type "text/plain"
