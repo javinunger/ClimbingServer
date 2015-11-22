@@ -9,7 +9,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.StringTokenizer;
 /**
  * Created by Chris on 11/19/2015.
  */
@@ -19,6 +23,11 @@ public class ClimbingServer {
     private static String DB_URI = "jdbc:postgresql://localhost:5432/ClimbingLog";
     private static String DB_LOGINID = "postgres";
     private static String DB_PASSWORD = "postgres";   //NEEDS TO BE CHANGED!
+
+    //STILL NEED:
+    //+ POST methods - A way to add Climbers (URGENT)
+    //+ DELETE method - For a Climb (Add later; focus on POST method for Climbers)
+    //+ PUT method - A way to update Climbs and Climbers (Add later; focus on POST method for Climbers)
 
     @GET
     // The Java method will produce content identified by the MIME Media type "text/plain"
@@ -118,19 +127,55 @@ public class ClimbingServer {
             Class.forName("org.postgresql.Driver");
             Connection connection = DriverManager.getConnection(DB_URI, DB_LOGINID, DB_PASSWORD);
             Statement statement = connection.createStatement();
-            statement.executeUpdate("DELETE FROM Player WHERE id= '" + id + "'");
+            statement.executeUpdate("DELETE FROM Climb WHERE climberID= '" + id + "'");
+            statement.executeUpdate("DELETE FROM Climber WHERE id= '" + id + "'");
             statement.close();
             connection.close();
         } catch (Exception e) {
             return e.getMessage();
         }
-        return "Player " + id + " deleted...";
+        return "Climber " + id + " deleted...";
     }
-    
-    //STILL NEED:
-    //+ POST methods - A way to add new Climbs and Climbers
-    //+ DELETE method - For a Climb
-    //+ PUT method - A way to update Climbs and Climbers
+
+    //Adds a new climb
+    @POST
+    @Path("/climb")
+    @Consumes("text/plain")
+    @Produces("text/plain")
+    public String postClimb(String climbLine) {
+        String result;
+        StringTokenizer st = new StringTokenizer(climbLine);
+        int id = -1;  //ID for Climb
+
+        //Get the timestamp
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); //Some conversions in order to get the timestamp
+        Date date = new Date();
+        dateFormat.format(date);
+        Timestamp timestamp = new Timestamp(date.getTime());
+        //Get the entered information
+        String userName = st.nextToken(), routeName = st.nextToken(), color = st.nextToken(), diff = st.nextToken();
+        String type = st.nextToken(), notes = st.nextToken();
+        //Add it to the database
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection(DB_URI, DB_LOGINID, DB_PASSWORD);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT MAX(ID) FROM Climb");
+            if (resultSet.next()) {
+                id = resultSet.getInt(1) + 1;
+            }
+            statement.executeUpdate("INSERT INTO Climb VALUES (" + id + ", '" + userName + "', '" + routeName + "', '" +
+                                                                   color + "', '" + diff + "', '" + type
+                                                                + "', '" + notes + "', '" + timestamp + "')");
+            resultSet.close();
+            statement.close();
+            connection.close();
+            result = "Climb " + id + " added...";
+        } catch (Exception e) {
+            result = e.getMessage();
+        }
+        return result;
+    }
 
     //Main method
     public static void main(String[] args) throws IOException {
