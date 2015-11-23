@@ -13,7 +13,8 @@ DROP TABLE IF EXISTS Climber;
 
 -- Create the schema.
 CREATE TABLE Climber (
-	ID varchar(50) PRIMARY KEY, -- Unique identifier, ignore case (i.e. 'davejoshmike')
+	ID integer PRIMARY KEY, -- Unique identifier, ignore case (i.e. 'davejoshmike')
+	userName varchar(25),
 	password varchar(50), -- ENCRYPTED. password must be encrypted, no less than 6 characters, case sensitive
 	emailAddress varchar(50), -- Email used to login (can be NULL if using facebook?)
 	name varchar(50), -- last and first name seperated by a comma
@@ -23,7 +24,7 @@ CREATE TABLE Climber (
 
 CREATE TABLE Climb (
 	ID integer PRIMARY KEY, -- unique identifier
-	climberID varchar(50) REFERENCES Climber(ID),
+	climberID integer REFERENCES Climber(ID),
 	name varchar(50), -- name given by user
 	color varchar(50), -- color selected by user (default = 'white')
 	difficulty varchar(50), -- i.e. '5.8+', 'V7', or '5.10a'
@@ -43,23 +44,23 @@ CREATE TABLE Climb (
 GRANT SELECT ON Climber TO PUBLIC;
 GRANT SELECT ON Climb TO PUBLIC;
 --GRANT SELECT ON ClimberClimber TO PUBLIC;
-
+	
 -- Add sample records.
-INSERT INTO Climber VALUES ('davejoshmike', 'funthings8', 'davejoshmike@gmail.com', 'Michel, David', '2015-10-27 18:10:00');
-INSERT INTO Climber VALUES ('cpd5', 'funthings8', 'cpd5@gmail.com', 'Dilley, Chris', '2015-11-18 18:49:00');
-INSERT INTO Climber VALUES ('AustinS', 'funthings8', 'austin@gmail.com', 'S, Austin', '2015-11-18 18:50:00');
+INSERT INTO Climber VALUES (0, 'davejoshmike', 'funthings8', 'davejoshmike@gmail.com', 'Michel, David', '2015-10-27 18:10:00');
+INSERT INTO Climber VALUES (1, 'cpd5', 'funthings8', 'cpd5@gmail.com', 'Dilley, Chris', '2015-11-18 18:49:00');
+INSERT INTO Climber VALUES (2, 'AustinS', 'funthings8', 'austin@gmail.com', 'S, Austin', '2015-11-18 18:50:00');
 
-INSERT INTO Climb VALUES (1, 'davejoshmike', 'route1', 'blue', '5.8+', 'top rope', 'fun climb!!!', '2015-11-18 18:49:00');
-INSERT INTO Climb VALUES (2, 'davejoshmike', 'route2', 'green', '5.8+', 'top rope', 'fun climb!!!', '2015-11-18 18:49:01');
-INSERT INTO Climb VALUES (3, 'davejoshmike', 'route3', 'yellow', '5.8+', 'top rope', 'fun climb!!!', '2015-11-18 18:49:02');
+INSERT INTO Climb VALUES (1, 0, 'route1', 'blue', '5.8+', 'top rope', 'fun climb!!!', '2015-11-18 18:49:00');
+INSERT INTO Climb VALUES (2, 0, 'route2', 'green', '5.8+', 'top rope', 'fun climb!!!', '2015-11-18 18:49:01');
+INSERT INTO Climb VALUES (3, 0, 'route3', 'yellow', '5.8+', 'top rope', 'fun climb!!!', '2015-11-18 18:49:02');
 
-INSERT INTO Climb VALUES (4, 'cpd5', 'route1', 'red', '3', 'bouldering', 'fun climb!!!', '2015-11-18 18:49:03');
-INSERT INTO Climb VALUES (5, 'cpd5', 'route2', 'green', '5.8+', 'top rope', 'fun climb!!!', '2015-11-18 18:49:04');
-INSERT INTO Climb VALUES (6, 'cpd5', 'route3', 'blue', '5.8+', 'top rope', 'fun climb!!!', '2015-11-18 18:49:05');
+INSERT INTO Climb VALUES (4, 1, 'route1', 'red', '3', 'bouldering', 'fun climb!!!', '2015-11-18 18:49:03');
+INSERT INTO Climb VALUES (5, 1, 'route2', 'green', '5.8+', 'top rope', 'fun climb!!!', '2015-11-18 18:49:04');
+INSERT INTO Climb VALUES (6, 1, 'route3', 'blue', '5.8+', 'top rope', 'fun climb!!!', '2015-11-18 18:49:05');
 
-INSERT INTO Climb VALUES (7, 'AustinS', 'route1', 'pink', '5.8+', 'top rope', 'fun climb!!!', '2015-11-18 18:39:06');
-INSERT INTO Climb VALUES (8, 'AustinS', 'route2', 'purple', '5.8+', 'top rope', 'fun climb!!!', '2015-11-18 18:49:07');
-INSERT INTO Climb VALUES (9, 'AustinS', 'route3', 'yellow', '5.8+', 'top rope', 'fun climb!!!', '2015-11-18 18:59:08');
+INSERT INTO Climb VALUES (7, 2, 'route1', 'pink', '5.8+', 'top rope', 'fun climb!!!', '2015-11-18 18:39:06');
+INSERT INTO Climb VALUES (8, 2, 'route2', 'purple', '5.8+', 'top rope', 'fun climb!!!', '2015-11-18 18:49:07');
+INSERT INTO Climb VALUES (9, 2, 'route3', 'yellow', '5.8+', 'top rope', 'fun climb!!!', '2015-11-18 18:59:08');
 
 -- Test queries
 
@@ -70,4 +71,4 @@ FROM Climber;
 
 SELECT *
 FROM Climber
-WHERE id= 'davejoshmike';
+WHERE userName= 'davejoshmike';
