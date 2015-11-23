@@ -103,7 +103,7 @@ public class ClimbingServer {
             Class.forName("org.postgresql.Driver");
             Connection connection = DriverManager.getConnection(DB_URI, DB_LOGINID, DB_PASSWORD);
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Climber WHERE id = '" + id + "'");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Climber WHERE ID = '" + id + "'");
             if (resultSet.next()) {
                 result = resultSet.getString(1) + " " + resultSet.getString(3) + " " + resultSet.getString(4) + "\n";
             } else {
@@ -122,13 +122,13 @@ public class ClimbingServer {
     @DELETE
     @Path("/climber/{id}")
     @Produces("text/plain")
-    public String deleteClimber(@PathParam("id") String id) {
+    public String deleteClimber(@PathParam("id") int id) {
         try {
             Class.forName("org.postgresql.Driver");
             Connection connection = DriverManager.getConnection(DB_URI, DB_LOGINID, DB_PASSWORD);
             Statement statement = connection.createStatement();
-            statement.executeUpdate("DELETE FROM Climb WHERE climberID= '" + id + "'");
-            statement.executeUpdate("DELETE FROM Climber WHERE id= '" + id + "'");
+            statement.executeUpdate("DELETE FROM Climb WHERE climberID= " + id);
+            statement.executeUpdate("DELETE FROM Climber WHERE ID= " + id);
             statement.close();
             connection.close();
         } catch (Exception e) {
@@ -138,6 +138,9 @@ public class ClimbingServer {
     }
 
     //Adds a new climb
+    //ClimbLine will look like this:
+    //routeName color difficulty types notes
+    //ID, climberID, and timestamp will be provided by the method.
     @POST
     @Path("/climb")
     @Consumes("text/plain")
@@ -146,15 +149,18 @@ public class ClimbingServer {
         String result;
         StringTokenizer st = new StringTokenizer(climbLine);
         int id = -1;  //ID for Climb
+        int climberID = 0;  //FOR NOW. THIS WILL ONLY BE USED IN THE USABILITY TEST! WE NEED TO FIGURE OUT A WAY TO GET THIS FROM THE CLIMBER TABLE
 
-        //Get the timestamp
+        //Generate a timestamp
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); //Some conversions in order to get the timestamp
         Date date = new Date();
         dateFormat.format(date);
         Timestamp timestamp = new Timestamp(date.getTime());
+
         //Get the entered information
-        String userName = st.nextToken(), routeName = st.nextToken(), color = st.nextToken(), diff = st.nextToken();
+        String routeName = st.nextToken(), color = st.nextToken(), diff = st.nextToken();
         String type = st.nextToken(), notes = st.nextToken();
+
         //Add it to the database
         try {
             Class.forName("org.postgresql.Driver");
@@ -162,9 +168,9 @@ public class ClimbingServer {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT MAX(ID) FROM Climb");
             if (resultSet.next()) {
-                id = resultSet.getInt(1) + 1;
+                id = resultSet.getInt(1) + 1;  //ID For Climb
             }
-            statement.executeUpdate("INSERT INTO Climb VALUES (" + id + ", '" + userName + "', '" + routeName + "', '" +
+            statement.executeUpdate("INSERT INTO Climb VALUES (" + id + ", " + climberID + ", '" + routeName + "', '" +
                                                                    color + "', '" + diff + "', '" + type
                                                                 + "', '" + notes + "', '" + timestamp + "')");
             resultSet.close();
