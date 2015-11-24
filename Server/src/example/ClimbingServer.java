@@ -183,6 +183,51 @@ public class ClimbingServer {
         return result;
     }
 
+    //Gets a specific Climb - needs to get all data of Climb, currently only grabs id, name, and climberID
+    @GET
+    @Path("/climb/{id}")
+    @Produces("text/plain")
+    public String getClimb(@PathParam("id") String id) {
+        String result = "";
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection(DB_URI, DB_LOGINID, DB_PASSWORD);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Climb WHERE ID = '" + id + "'");
+            if (resultSet.next()) {
+                result = resultSet.getString(1) + " " + resultSet.getString(3) + " " + resultSet.getString(4) + "\n";
+            } else {
+                result = "nothing found...";
+            }
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            result = e.getMessage().toString();
+        }
+        return result;
+    }
+
+    //Deletes a Climb
+    @DELETE
+    @Path("/climb/{id}")
+    @Produces("text/plain")
+    public String deleteClimb(@PathParam("id") int id) {
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection(DB_URI, DB_LOGINID, DB_PASSWORD);
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("DELETE FROM Climb WHERE ID= " + id);
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        return "Climb " + id + " deleted...";
+    }
+
+
+
     //Main method
     public static void main(String[] args) throws IOException {
         HttpServer server = HttpServerFactory.create("http://localhost:9998/");
