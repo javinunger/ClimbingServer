@@ -46,7 +46,7 @@ GRANT SELECT ON Climb TO PUBLIC;
 --GRANT SELECT ON ClimberClimber TO PUBLIC;
 	
 -- Add sample records.
---INSERT INTO Climber VALUES (0, 'davejoshmike', 'funthings8', 'davejoshmike@gmail.com', 'Michel, David', '2015-10-27 18:10:00');
+INSERT INTO Climber VALUES (0, 'Guest', '', 'guest@guest.com', 'Guest, Mr./Mrs.', '2015-10-27 18:10:00');
 --INSERT INTO Climber VALUES (1, 'cpd5', 'funthings8', 'cpd5@gmail.com', 'Dilley, Chris', '2015-11-18 18:49:00');
 --INSERT INTO Climber VALUES (2, 'AustinS', 'funthings8', 'austin@gmail.com', 'S, Austin', '2015-11-18 18:50:00');
 
