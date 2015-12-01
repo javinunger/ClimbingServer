@@ -50,10 +50,13 @@ public class ClimbingServer {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM Climb");
             if (resultSet.next()) {
                 result += "Climb " + resultSet.getInt(1) + ", Climber: " + resultSet.getInt(2) + ", Name: " + resultSet.getString(3) + ", Color: "
-                           + resultSet.getString(4) + ", Difficulty: " + resultSet.getString(5) + ", Type: " + resultSet.getString(6) + ", Time: " + resultSet.getTimestamp(8) + "\n";
+                        + resultSet.getString(4) + ", Difficulty: " + resultSet.getString(5) + ", Type: " + resultSet.getString(6) + ", Notes: "
+                        + resultSet.getString(7) + ", Time: " + resultSet.getTimestamp(8) + "\n";
                 while(resultSet.next()) {
                     result += "Climb " + resultSet.getInt(1) + ", Climber: " + resultSet.getInt(2) + ", Name: " + resultSet.getString(3) + ", Color: "
-                            + resultSet.getString(4) + ", Difficulty: " + resultSet.getString(5) + ", Type: " + resultSet.getString(6) + ", Time: " + resultSet.getTimestamp(8) + "\n";                }
+                            + resultSet.getString(4) + ", Difficulty: " + resultSet.getString(5) + ", Type: " + resultSet.getString(6) + ", Notes: "
+                            + resultSet.getString(7) + ", Time: " + resultSet.getTimestamp(8) + "\n";
+                }
             } else {
                 result = "nothing found...";
             }
@@ -188,15 +191,17 @@ public class ClimbingServer {
     @GET
     @Path("/climb/{id}")
     @Produces("text/plain")
-    public String getClimb(@PathParam("id") String id) {
+    public String getClimb(@PathParam("id") int id) {
         String result = "";
         try {
             Class.forName("org.postgresql.Driver");
             Connection connection = DriverManager.getConnection(DB_URI, DB_LOGINID, DB_PASSWORD);
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Climb WHERE ID = '" + id + "'");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Climb WHERE ID ="  + id);
             if (resultSet.next()) {
-                result = resultSet.getString(1) + " " + resultSet.getString(3) + " " + resultSet.getString(4) + "\n";
+                result += "Climb " + resultSet.getInt(1) + ", Climber: " + resultSet.getInt(2) + ", Name: " + resultSet.getString(3) + ", Color: "
+                        + resultSet.getString(4) + ", Difficulty: " + resultSet.getString(5) + ", Type: " + resultSet.getString(6) + ", Notes: "
+                        + resultSet.getString(7) + ", Time: " + resultSet.getTimestamp(8) + "\n";
             } else {
                 result = "nothing found...";
             }
