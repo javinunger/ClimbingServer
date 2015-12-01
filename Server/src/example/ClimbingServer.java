@@ -49,10 +49,11 @@ public class ClimbingServer {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM Climb");
             if (resultSet.next()) {
-                result += resultSet.getInt(1) + " " + resultSet.getString(3) + " " + resultSet.getString(2) + "\n";
+                result += "Climb " + resultSet.getInt(1) + ", Climber: " + resultSet.getInt(2) + ", Name: " + resultSet.getString(3) + ", Color: "
+                           + resultSet.getString(4) + ", Difficulty: " + resultSet.getString(5) + ", Type: " + resultSet.getString(6) + ", Time: " + resultSet.getTimestamp(8) + "\n";
                 while(resultSet.next()) {
-                    result += resultSet.getInt(1) + " " + resultSet.getString(3) + " " + resultSet.getString(2) + "\n";
-                }
+                    result += "Climb " + resultSet.getInt(1) + ", Climber: " + resultSet.getInt(2) + ", Name: " + resultSet.getString(3) + ", Color: "
+                            + resultSet.getString(4) + ", Difficulty: " + resultSet.getString(5) + ", Type: " + resultSet.getString(6) + ", Time: " + resultSet.getTimestamp(8) + "\n";                }
             } else {
                 result = "nothing found...";
             }
@@ -157,9 +158,9 @@ public class ClimbingServer {
         dateFormat.format(date);
         Timestamp timestamp = new Timestamp(date.getTime());
 
-        //Get the entered information
-        String routeName = st.nextToken(), color = st.nextToken(), diff = st.nextToken();
-        String type = st.nextToken(), notes = st.nextToken();
+        //Get the entered information (Get the full word until the colon)
+        String routeName = st.nextToken(":"), color = st.nextToken(":"), diff = st.nextToken(":");
+        String type = st.nextToken(":"), notes = st.nextToken(":");
 
         //Add it to the database
         try {
