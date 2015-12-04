@@ -70,5 +70,4 @@ SELECT Climber.name as Name,
 FROM Climber;
 
 SELECT *
-FROM Climber
-WHERE userName= 'davejoshmike';
+FROM Climber;
