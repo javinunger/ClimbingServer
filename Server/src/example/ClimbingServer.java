@@ -51,11 +51,11 @@ public class ClimbingServer {
             if (resultSet.next()) {
                 result += "Climb " + resultSet.getInt(1) + ", Climber: " + resultSet.getInt(2) + ", Name: " + resultSet.getString(3) + ", Color: "
                         + resultSet.getString(4) + ", Difficulty: " + resultSet.getString(5) + ", Type: " + resultSet.getString(6) + ", Notes: "
-                        + resultSet.getString(7) + ", Time: " + resultSet.getTimestamp(8) + "\n";
+                        + resultSet.getString(7) + ", Time: " + resultSet.getTimestamp(8) + ";\n";
                 while(resultSet.next()) {
                     result += "Climb " + resultSet.getInt(1) + ", Climber: " + resultSet.getInt(2) + ", Name: " + resultSet.getString(3) + ", Color: "
                             + resultSet.getString(4) + ", Difficulty: " + resultSet.getString(5) + ", Type: " + resultSet.getString(6) + ", Notes: "
-                            + resultSet.getString(7) + ", Time: " + resultSet.getTimestamp(8) + "\n";
+                            + resultSet.getString(7) + ", Time: " + resultSet.getTimestamp(8) + ";\n";
                 }
             } else {
                 result = "nothing found...";
