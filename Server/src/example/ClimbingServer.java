@@ -44,13 +44,13 @@ public class ClimbingServer {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM Climb");
             if (resultSet.next()) {
-                result += "Climb " + resultSet.getInt(1) + ", Climber: " + resultSet.getInt(2) + ", Name: " + resultSet.getString(3) + ", Color: "
-                        + resultSet.getString(4) + ", Difficulty: " + resultSet.getString(5) + ", Type: " + resultSet.getString(6) + ", Notes: "
-                        + resultSet.getString(7) + ", Time: " + resultSet.getTimestamp(8) + ";\n";
+                result += "Name: " + resultSet.getString(3) + "\nColor: "
+                        + resultSet.getString(4) + "\nDifficulty: " + resultSet.getString(5) + "\nType: " + resultSet.getString(6) + "\nNotes: "
+                        + resultSet.getString(7) + "\nTime: " + resultSet.getTimestamp(8) + ";\n";
                 while(resultSet.next()) {
-                    result += "Climb " + resultSet.getInt(1) + ", Climber: " + resultSet.getInt(2) + ", Name: " + resultSet.getString(3) + ", Color: "
-                            + resultSet.getString(4) + ", Difficulty: " + resultSet.getString(5) + ", Type: " + resultSet.getString(6) + ", Notes: "
-                            + resultSet.getString(7) + ", Time: " + resultSet.getTimestamp(8) + ";\n";
+                    result += "Name: " + resultSet.getString(3) + "\nColor: "
+                            + resultSet.getString(4) + "\nDifficulty: " + resultSet.getString(5) + "\nType: " + resultSet.getString(6) + "\nNotes: "
+                            + resultSet.getString(7) + "\nTime: " + resultSet.getTimestamp(8) + ";\n";
                 }
             } else {
                 result = "nothing found...";
@@ -76,7 +76,7 @@ public class ClimbingServer {
             Class.forName("org.postgresql.Driver");
             Connection connection = DriverManager.getConnection(DB_URI, DB_LOGINID, DB_PASSWORD);
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Climb ORDER BY time"); //Order by most recent timestamp
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Climb ORDER BY time DESC"); //Order by most recent timestamp
             if (resultSet.next()) {
                 result += "Name:\n" + resultSet.getString(3) + "\nColor:\n"
                         + resultSet.getString(4) + "\nDifficulty:\n" + resultSet.getString(5) + "\nType:\n" + resultSet.getString(6) + "\nTime:\n" + resultSet.getTimestamp(8) + ";\n";
