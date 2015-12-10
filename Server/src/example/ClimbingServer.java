@@ -24,11 +24,6 @@ public class ClimbingServer {
     private static String DB_LOGINID = "postgres";
     private static String DB_PASSWORD = "postgres";   //NEEDS TO BE CHANGED!
 
-    //STILL NEED:
-    //+ POST methods - A way to add Climbers (URGENT)
-    //+ DELETE method - For a Climb (Add later; focus on POST method for Climbers)
-    //+ PUT method - A way to update Climbs and Climbers (Add later; focus on POST method for Climbers)
-
     @GET
     // The Java method will produce content identified by the MIME Media type "text/plain"
     @Produces("text/plain")
@@ -56,6 +51,39 @@ public class ClimbingServer {
                     result += "Climb " + resultSet.getInt(1) + ", Climber: " + resultSet.getInt(2) + ", Name: " + resultSet.getString(3) + ", Color: "
                             + resultSet.getString(4) + ", Difficulty: " + resultSet.getString(5) + ", Type: " + resultSet.getString(6) + ", Notes: "
                             + resultSet.getString(7) + ", Time: " + resultSet.getTimestamp(8) + ";\n";
+                }
+            } else {
+                result = "nothing found...";
+            }
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            result = e.getMessage().toString();
+        }
+        return result;
+    }
+
+    //Gets all of the current Climbs (Profile version)
+    //Gets recent climbs (First 3 for now)
+    @GET
+    @Path("/climbs/recent")
+    @Produces("text/plain")
+    public String getClimbsRecent() {
+        String result = "";
+        int count = 0;  //Stopping point for the most recent climbs
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection(DB_URI, DB_LOGINID, DB_PASSWORD);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Climb ORDER BY time"); //Order by most recent timestamp
+            if (resultSet.next()) {
+                result += "Name:\n" + resultSet.getString(3) + "\nColor:\n"
+                        + resultSet.getString(4) + "\nDifficulty:\n" + resultSet.getString(5) + "\nType:\n" + resultSet.getString(6) + "\nTime:\n" + resultSet.getTimestamp(8) + ";\n";
+                while(resultSet.next() && count < 1) {
+                    result += "Name:\n" + resultSet.getString(3) + "\nColor:\n"
+                            + resultSet.getString(4) + "\nDifficulty:\n" + resultSet.getString(5) + "\nType:\n" + resultSet.getString(6) + "\nTime:\n" + resultSet.getTimestamp(8) + ";\n";
+                    count++;
                 }
             } else {
                 result = "nothing found...";
