@@ -59,10 +59,10 @@ INSERT INTO Climber VALUES (5, 'davejoshmike', 'funthings11', 'djm43@gmail.com',
 INSERT INTO Climb VALUES (1, 0, 'route1', 'blue', '5.8+', 'top rope', 'fun climb!', '2015-11-18 18:49:00');
 INSERT INTO Climb VALUES (2, 0, 'route2', 'green', '5.8+', 'boulder', 'Interesting...', '2015-11-18 18:49:50');
 
-INSERT INTO Climb VALUES (1, 1, 'route1', 'green', '5.4+', 'top rope', 'WHY?', '2015-11-18 18:49:02');
-INSERT INTO Climb VALUES (2, 1, 'route2', 'orange', '5.5', 'boulder', 'FUN!', '2015-11-18 18:49:40');
+INSERT INTO Climb VALUES (3, 1, 'route1', 'green', '5.4+', 'top rope', 'WHY?', '2015-11-18 18:49:02');
+INSERT INTO Climb VALUES (4, 1, 'route2', 'orange', '5.5', 'boulder', 'FUN!', '2015-11-18 18:49:40');
 
-INSERT INTO Climb VALUES (1, 2, 'route3', 'pink', '5.0', 'boulder', 'NOPE', '2015-11-18 18:49:02');
+INSERT INTO Climb VALUES (5, 2, 'route3', 'pink', '5.0', 'boulder', 'NOPE', '2015-11-18 18:49:02');
 
 -- Friend records
 INSERT INTO ClimberClimber VALUES(0, 1);
