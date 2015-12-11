@@ -36,7 +36,7 @@ CREATE TABLE Climb (
 
 -- Friends Table
 CREATE TABLE ClimberClimber (
-	climberID integer REFERENCES Climber(ID),
+	ID integer REFERENCES Climber(ID),
 	friendID integer REFERENCES Climber(ID)
 	);
 
@@ -70,6 +70,10 @@ INSERT INTO ClimberClimber VALUES(0, 2);
 INSERT INTO ClimberClimber VALUES(0, 3);
 INSERT INTO ClimberClimber VALUES(0, 4);
 INSERT INTO ClimberClimber VALUES(0, 5);
+
+INSERT INTO ClimberClimber VALUES(1, 2);
+INSERT INTO ClimberClimber VALUES(1, 3);
+INSERT INTO ClimberClimber VALUES(1, 0);
 
 -- Test queries
 -- Lists the names of all climbers and how many days they've been a member
