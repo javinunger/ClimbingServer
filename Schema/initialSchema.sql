@@ -47,7 +47,7 @@ GRANT SELECT ON Climb TO PUBLIC;
 GRANT SELECT ON ClimberClimber TO PUBLIC;
 	
 -- Add sample records.
-INSERT INTO Climber VALUES (0, 'Guest', '', 'guest@guest.com', 'Guest, Mr./Mrs.', '2015-10-27 18:10:00');
+INSERT INTO Climber VALUES (0, 'Ed', 'Ed_Da_Walrus', 'walrusLover@guest.com', 'Ed, Mr.', '2015-10-27 18:10:00');
 INSERT INTO Climber VALUES (1, 'cpd5', 'funthings8', 'cpd5@gmail.com', 'Dilley, Chris', '2015-11-18 18:49:00');
 INSERT INTO Climber VALUES (2, 'AustinS', 'funthings8', 'austin@gmail.com', 'S, Austin', '2015-11-18 18:50:00');
 
@@ -55,8 +55,8 @@ INSERT INTO Climb VALUES (1, 0, 'route1', 'blue', '5.8+', 'top rope', 'fun climb
 INSERT INTO Climb VALUES (2, 0, 'route2', 'green', '5.8+', 'top rope', 'fun climb!!!', '2015-11-18 18:49:01');
 INSERT INTO Climb VALUES (3, 0, 'route3', 'yellow', '5.8+', 'top rope', 'fun climb!!!', '2015-11-18 18:49:02');
 
-INSERT INTO ClimberClimber VALUES(0, 1);
-INSERT INTO ClimberClimber VALUES(0, 2);
+INSERT INTO ClimberClimber VALUES(0, 1, 'cpd5');
+INSERT INTO ClimberClimber VALUES(0, 2, 'AustinS');
 
 -- Test queries
 -- Lists the names of all climbers and how many days they've been a member
@@ -66,3 +66,6 @@ FROM Climber;
 
 SELECT *
 FROM Climber;
+
+SELECT *
+FROM ClimberClimber;
