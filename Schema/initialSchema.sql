@@ -37,8 +37,7 @@ CREATE TABLE Climb (
 -- Friends Table
 CREATE TABLE ClimberClimber (
 	climberID integer REFERENCES Climber(ID),
-	friendID integer REFERENCES Climber(ID),
-	friendName varchar(50) REFERENCES Climber(name)
+	friendID integer REFERENCES Climber(ID)
 	);
 
 -- Allow users to select data from the tables.
@@ -55,8 +54,8 @@ INSERT INTO Climb VALUES (1, 0, 'route1', 'blue', '5.8+', 'top rope', 'fun climb
 INSERT INTO Climb VALUES (2, 0, 'route2', 'green', '5.8+', 'top rope', 'fun climb!!!', '2015-11-18 18:49:01');
 INSERT INTO Climb VALUES (3, 0, 'route3', 'yellow', '5.8+', 'top rope', 'fun climb!!!', '2015-11-18 18:49:02');
 
-INSERT INTO ClimberClimber VALUES(0, 1, 'cpd5');
-INSERT INTO ClimberClimber VALUES(0, 2, 'AustinS');
+INSERT INTO ClimberClimber VALUES(0, 1);
+INSERT INTO ClimberClimber VALUES(0, 2);
 
 -- Test queries
 -- Lists the names of all climbers and how many days they've been a member
