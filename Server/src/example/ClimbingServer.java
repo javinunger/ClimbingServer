@@ -3,6 +3,7 @@ package example;
 import com.sun.jersey.api.container.httpserver.HttpServerFactory;
 import com.sun.net.httpserver.HttpServer;
 
+import javax.swing.plaf.nimbus.State;
 import javax.ws.rs.*;
 import java.io.IOException;
 import java.sql.Connection;
@@ -14,6 +15,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.StringTokenizer;
+
 /**
  * Created by Chris on 11/19/2015.
  */
@@ -32,7 +34,7 @@ public class ClimbingServer {
         return "Welcome to On Belay's Server!";
     }
 
-    //Gets all of the current Climbs
+    //Gets all of the current Climbs in the database
     @GET
     @Path("/climbs/")
     @Produces("text/plain")
@@ -64,19 +66,18 @@ public class ClimbingServer {
         return result;
     }
 
-    //Gets all of the current Climbs (Profile version)
     //Gets recent climbs (First 3 for now)
     @GET
-    @Path("/climbs/recent")
+    @Path("/climbs/recent/{id}")
     @Produces("text/plain")
-    public String getClimbsRecent() {
+    public String getClimbsRecent(@PathParam("id") int id) {
         String result = "";
         int count = 0;  //Stopping point for the most recent climbs
         try {
             Class.forName("org.postgresql.Driver");
             Connection connection = DriverManager.getConnection(DB_URI, DB_LOGINID, DB_PASSWORD);
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Climb ORDER BY time DESC"); //Order by most recent timestamp
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Climb WHERE climberID =" + id + " ORDER BY time DESC"); //Order by most recent timestamp
             if (resultSet.next()) {
                 result += "Name:\n" + resultSet.getString(3) + "\nColor:\n"
                         + resultSet.getString(4) + "\nDifficulty:\n" + resultSet.getString(5) + "\nType:\n" + resultSet.getString(6) + "\nTime:\n" + resultSet.getTimestamp(8) + ";\n";
@@ -97,7 +98,7 @@ public class ClimbingServer {
         return result;
     }
 
-    //Gets all of the current Climbers
+    //Gets all of the current Climbers in the database
     @GET
     @Path("/climbers/")
     @Produces("text/plain")
@@ -109,9 +110,9 @@ public class ClimbingServer {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM Climber");
             if (resultSet.next()) {
-                result += resultSet.getString(1) + " " + resultSet.getString(3) + " " + resultSet.getString(4) + "\n";
+                result += resultSet.getString(1) + " " + resultSet.getString(2) + " " + resultSet.getString(4) + "\n";
                 while(resultSet.next()) {
-                    result += resultSet.getString(1) + " " + resultSet.getString(3) + " " + resultSet.getString(4) + "\n";
+                    result += resultSet.getString(1) + " " + resultSet.getString(2) + " " + resultSet.getString(4) + "\n";
                 }
             } else {
                 result = "nothing found...";
@@ -129,18 +130,47 @@ public class ClimbingServer {
     @GET
     @Path("/climber/{id}")
     @Produces("text/plain")
-    public String getClimber(@PathParam("id") String id) {
+    public String getClimber(@PathParam("id") int id) {
         String result = "";
         try {
             Class.forName("org.postgresql.Driver");
             Connection connection = DriverManager.getConnection(DB_URI, DB_LOGINID, DB_PASSWORD);
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Climber WHERE ID = '" + id + "'");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Climber WHERE ID = " + id);
             if (resultSet.next()) {
-                result = resultSet.getString(1) + " " + resultSet.getString(3) + " " + resultSet.getString(4) + "\n";
+                result = resultSet.getString(1) + " " + resultSet.getString(2) + " " + resultSet.getString(4) + "\n";
             } else {
                 result = "nothing found...";
             }
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            result = e.getMessage().toString();
+        }
+        return result;
+    }
+
+    //Returns the friends of a user
+    @GET
+    @Path("/friends/{id}")
+    public String getFriends(@PathParam("id") int id) {
+        String result = "";
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection(DB_URI, DB_LOGINID, DB_PASSWORD);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Climber, ClimberClimber WHERE ClimberClimber.ID= " + id +
+                                                            " AND ClimberClimber.friendId= Climber.ID");
+            if(resultSet.next()) {
+                result += resultSet.getString("userName") + ";\n";
+                while(resultSet.next()) {
+                    result += resultSet.getString("userName") + ";\n";
+                }
+            } else {
+                result = "no friends... :(";
+            }
+
             resultSet.close();
             statement.close();
             connection.close();
@@ -215,7 +245,7 @@ public class ClimbingServer {
         return result;
     }
 
-    //Gets a specific Climb - needs to get all data of Climb, currently only grabs id, name, and climberID
+    //Gets a specific Climb
     @GET
     @Path("/climb/{id}")
     @Produces("text/plain")
