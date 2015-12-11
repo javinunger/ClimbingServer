@@ -69,6 +69,7 @@ INSERT INTO ClimberClimber VALUES(0, 1);
 INSERT INTO ClimberClimber VALUES(0, 2);
 INSERT INTO ClimberClimber VALUES(0, 3);
 INSERT INTO ClimberClimber VALUES(0, 4);
+INSERT INTO ClimberClimber VALUES(0, 5);
 
 -- Test queries
 -- Lists the names of all climbers and how many days they've been a member
