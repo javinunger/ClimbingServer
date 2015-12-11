@@ -49,7 +49,7 @@ GRANT SELECT ON ClimberClimber TO PUBLIC;
 -- Add sample records.
 
 --Climber records
-INSERT INTO Climber VALUES (0, 'Ed_Da_Walrus', 'password', 'walrusLover@gmail.com', 'Ed, Mr.', '2015-10-27 18:10:00');
+INSERT INTO Climber VALUES (0, 'Sgt. Squiggles', 'password', 'walrusLover@gmail.com', 'Squiggles, Mr.', '2015-10-27 18:10:00');
 INSERT INTO Climber VALUES (1, 'cpd5', 'funthings8', 'cpd5@gmail.com', 'Dilley, Chris', '2015-11-16 18:49:00');
 INSERT INTO Climber VALUES (2, 'AustinS', 'funthings7', 'austin@gmail.com', 'S, Austin', '2015-11-17 18:50:00');
 INSERT INTO Climber VALUES (3, 'jam54', 'funthings9', 'jam@gmail.com', 'Meyer, Jacob', '2015-11-17 18:51:00');
@@ -82,8 +82,10 @@ SELECT Climber.name as Name,
        date_part('day', NOW() - Climber.dateCreated) as Member_days
 FROM Climber;
 
+-- Gets all of the current Climbers
 SELECT *
 FROM Climber;
 
+-- Gets all of the friends of Climbers
 SELECT *
 FROM ClimberClimber;
