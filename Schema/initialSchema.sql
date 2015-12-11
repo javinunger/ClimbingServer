@@ -37,7 +37,8 @@ CREATE TABLE Climb (
 -- Friends Table
 CREATE TABLE ClimberClimber (
 	climberID integer REFERENCES Climber(ID),
-	friendID integer REFERENCES Climber(ID)
+	friendID integer REFERENCES Climber(ID),
+	friendName varchar(50) REFERENCES Climber(name)
 	);
 
 -- Allow users to select data from the tables.
