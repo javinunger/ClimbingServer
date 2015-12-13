@@ -24,9 +24,9 @@ import java.util.StringTokenizer;
 @Path("/climbingserver")
 public class ClimbingServer {
 
-    private static String DB_URI = "jdbc:postgresql://localhost:5432/ClimbingLog";
+    private static String DB_URI = "jdbc:postgresql://localhost:5433/ClimbingLog";
     private static String DB_LOGINID = "postgres";   //Login information for the database
-    private static String DB_PASSWORD = "postgres";
+    private static String DB_PASSWORD = "LegendOfZelda567890";
 
     /**
      * Gets a welcome message and puts it on the screen for the user.
