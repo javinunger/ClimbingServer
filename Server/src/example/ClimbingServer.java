@@ -52,7 +52,7 @@ public class ClimbingServer {
             Class.forName("org.postgresql.Driver");
             Connection connection = DriverManager.getConnection(DB_URI, DB_LOGINID, DB_PASSWORD);
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Climb");  //Query for the data of the Climbs
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Climb ORDER BY time DESC");  //Query for the data of the Climbs
             if (resultSet.next()) {
                 result += "Name: " + resultSet.getString(3) + "\nColor: "
                         + resultSet.getString(4) + "\nDifficulty: " + resultSet.getString(5) + "\nType: " + resultSet.getString(6) + "\nNotes: "
@@ -88,7 +88,7 @@ public class ClimbingServer {
             Class.forName("org.postgresql.Driver");
             Connection connection = DriverManager.getConnection(DB_URI, DB_LOGINID, DB_PASSWORD);
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Climb WHERE climberID =" + id); //Order by most recent timestamp
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Climb WHERE climberID =" + id + " ORDER BY time DESC"); //Order by most recent timestamp
             if (resultSet.next()) {
                 result += "Name:\n" + resultSet.getString(3) + "\nColor:\n"
                         + resultSet.getString(4) + "\nDifficulty:\n" + resultSet.getString(5) + "\nType:\n" + resultSet.getString(6) + "\nTime:\n" + resultSet.getTimestamp(8) + ";\n";
@@ -251,7 +251,7 @@ public class ClimbingServer {
             Class.forName("org.postgresql.Driver");
             Connection connection = DriverManager.getConnection(DB_URI, DB_LOGINID, DB_PASSWORD);
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Climb WHERE ID ="  + id);  //Query for the specific Climb
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Climb WHERE ID ="  + id + " ORDER BY time DESC");  //Query for the specific Climb
             if (resultSet.next()) {
                 result += "Climb " + resultSet.getInt(1) + ", Climber: " + resultSet.getInt(2) + ", Name: " + resultSet.getString(3) + ", Color: "
                         + resultSet.getString(4) + ", Difficulty: " + resultSet.getString(5) + ", Type: " + resultSet.getString(6) + ", Notes: "
